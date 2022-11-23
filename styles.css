@@ -1,0 +1,40 @@
+.board {
+  display: flex;
+}
+
+.player-corner {
+  flex: 1 1 15%;
+}
+
+.buttons-container {
+  min-width: 60px;
+  max-width: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons-container input {
+  flex: auto;
+}
+
+.battlefield {
+  text-align: center;
+  flex: 1 1 70%;
+}
+
+.choices {
+  font: bold 24px sans-serif;
+}
+
+.opponent-corner {
+  flex: 1 1 15%;
+}
+
+.opponent-choices-container p {
+  text-align: center;
+  border: 3px solid black;
+  min-width: 60px;
+  max-width: 100px;
+  margin-left: auto;
+  margin-right: 0;
+}

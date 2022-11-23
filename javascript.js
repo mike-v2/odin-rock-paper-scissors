@@ -2,38 +2,30 @@ let rockRegex = /rock/i;
 let paperRegex = /paper/i;
 let scissorsRegex = /scissors/i;
 
-function game() {
-  let totalPlayerScore = 0;
+function playRound(playerChoice) {
+  let computerChoice = getComputerChoice();
+  console.log('computer choice = ' + computerChoice);
 
-  for (let i=0; i<5; i++) {
-    let userChoice = undefined;
-    while(userChoice === undefined) {
-      userChoice = parsePlayerInput(prompt('Choose your next move wisely'));
-    }
+  choices.textContent = playerChoice + ' | ' + computerChoice;
 
-    let computerChoice = getComputerChoice();
-    console.log('computer choice = ' + computerChoice);
-
-    let playerScore = getPlayerScore(userChoice, computerChoice);
-    if (playerScore > 0) {
-      console.log('Nice');
-    } else if (playerScore < 0) {
-      console.log('better luck next time');
-    } else {
-      console.log('Draw');
-    }
-
-    totalPlayerScore += playerScore;
-
-    console.log('player score = ' + totalPlayerScore);
+  let playerScore = getPlayerScore(playerChoice, computerChoice);
+  if (playerScore > 0) {
+    outcome.textContent = 'Nice';
+  } else if (playerScore < 0) {
+    outcome.textContent = 'better luck next time';
+  } else {
+    outcome.textContent = 'Draw';
   }
 
-  if (totalPlayerScore > 0) {
-    console.log("YOU WIN");
-  } else if (totalPlayerScore < 0) {
-    console.log("you lost. try again");
-  } else {
-    console.log("Draw");
+  totalPlayerScore += playerScore;
+  score.textContent = "Score: " + totalPlayerScore.toString();
+
+  if (totalPlayerScore >= 5) {
+    hasGameEnded = true;
+    score.textContent += " YOU WIN";
+  } else if (totalPlayerScore <= -5) {
+    hasGameEnded = true;
+    score.textContent += " you lost. try again";
   }
 }
 
@@ -92,4 +84,18 @@ function getComputerChoice() {
   }
 }
 
-game();
+function onButtonClicked(e) {
+  if (hasGameEnded) return;
+
+  playRound(parsePlayerInput(e.target.value));
+}
+
+let totalPlayerScore = 0;
+let hasGameEnded = false;
+
+const buttons = document.querySelectorAll('input[type=button]');
+buttons.forEach((btn) => btn.addEventListener('click', onButtonClicked));
+
+const choices = document.querySelector('.choices');
+const outcome = document.querySelector('.outcome');
+const score = document.querySelector('.score');
